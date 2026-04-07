@@ -3,6 +3,7 @@ package br.com.cotiinformatica.api_clientes.controllers;
 import br.com.cotiinformatica.api_clientes.dtos.ClienteRequest;
 import br.com.cotiinformatica.api_clientes.entities.Cliente;
 import br.com.cotiinformatica.api_clientes.services.ClienteService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -12,6 +13,9 @@ import java.util.List;
 @RequestMapping("/api/cliente")
 public class ClienteController {
 
+    @Autowired
+    private ClienteService clienteService;
+
     /*
         HTTP POST /api/cliente/criar
         Operação na API para cadastrar um cliente
@@ -19,7 +23,6 @@ public class ClienteController {
     @PostMapping("criar")
     public ResponseEntity<?> criar(@RequestBody ClienteRequest request) {
         try {
-            var clienteService = new ClienteService();
             clienteService.cadastrarCliente(request);
 
             //HTTP 201 - CREATED
@@ -42,7 +45,6 @@ public class ClienteController {
     @GetMapping("consultar")
     public ResponseEntity<?> consultar(@RequestParam String nome) {
         try {
-            var clienteService = new ClienteService();
             var lista = clienteService.pesquisarClientes(nome);
 
             //HTTP 200 - OK
